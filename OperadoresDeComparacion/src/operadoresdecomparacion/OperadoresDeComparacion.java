@@ -20,5 +20,5 @@ public class OperadoresDeComparacion {
         System.out.println("Menor que (a < b): " + menorQue);            
         System.out.println("Mayor o igual que (a >= c): " + mayorIgualQue); 
         System.out.println("Menor o igual que (b <= c): " + menorIgualQue);     
-    }
+    } //OSCAR ALBERTO APAZA LIMACHE
 }

@@ -88,5 +88,6 @@ public class SwitchCase {
           
         scanner.close();    
         }
+        //OSCAR ALBERTO APAZA LIMACHE
     }
 }

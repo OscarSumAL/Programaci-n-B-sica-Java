@@ -17,6 +17,6 @@ public class OperadoresLogicos {
         //Operador NOT (!)
         boolean resultadoNot = !esVerdadero;
         System.out.println("NOT: "+ !esVerdadero);
-    }
+    } //OSCAR ALBERTO APAZA LIMACHE
     
 }

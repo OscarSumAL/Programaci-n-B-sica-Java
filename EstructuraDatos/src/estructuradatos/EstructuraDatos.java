@@ -204,7 +204,8 @@ public class EstructuraDatos {
             } finally{
                 System.out.println("Gracias por usar el programa");
             }
-        }
+        }       
+        
         
         scanner.close();
     }

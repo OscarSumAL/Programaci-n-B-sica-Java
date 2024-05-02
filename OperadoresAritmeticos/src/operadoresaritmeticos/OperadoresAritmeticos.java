@@ -34,6 +34,8 @@ public class OperadoresAritmeticos {
         double modulo = variableUno % variableDos;
         System.out.println("Modulo: " + modulo);
         
+        //OSCAR ALBERTO APAZA LIMACHE
+        
         
     }
     
