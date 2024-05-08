@@ -3,7 +3,7 @@ import javax.script.ScriptEngineManager;
 public class CalculadoraSwing extends javax.swing.JFrame {
     float primerNumero;
     float segundoNumero;
-    String[] signos = {"+", "-", "*", "/"};
+    
     
     public CalculadoraSwing() {
         initComponents();
@@ -98,7 +98,7 @@ public class CalculadoraSwing extends javax.swing.JFrame {
             }
         });
 
-        btnmult.setText("x");
+        btnmult.setText("*");
         btnmult.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnmultActionPerformed(evt);
@@ -314,10 +314,12 @@ public class CalculadoraSwing extends javax.swing.JFrame {
 
     private void btncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncActionPerformed
         tfResultado.setText(tfResultado.getText()+ "C");
+        tfResultado.setText("");
     }//GEN-LAST:event_btncActionPerformed
 
     private void btnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnceActionPerformed
         tfResultado.setText(tfResultado.getText()+ "CE");
+        tfResultado.setText("");
     }//GEN-LAST:event_btnceActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -379,31 +381,118 @@ public class CalculadoraSwing extends javax.swing.JFrame {
             primerNumero = Float.parseFloat(numero[0]);
             segundoNumero = Float.parseFloat(numero[1]);
             tfResultado.setText(String.valueOf(primerNumero + segundoNumero));
+        } 
+        else if(sentencia.contains("-")){
+            String[] numero = sentencia.split("\\-");
+            primerNumero = Float.parseFloat(numero[0]);
+            segundoNumero = Float.parseFloat(numero[1]);
+            tfResultado.setText(String.valueOf(Float.parseFloat (numero[0]) - Float.parseFloat (numero[1])));
         }
-    
+        
+        else if(sentencia.contains("*")){
+            String[] numero = sentencia.split("\\*");
+            primerNumero = Float.parseFloat(numero[0]);
+            segundoNumero = Float.parseFloat(numero[1]);
+            tfResultado.setText(String.valueOf(Float.parseFloat (numero[0]) * Float.parseFloat (numero[1])));
+        }
+        
+        else if(sentencia.contains("/")){
+            String[] numero = sentencia.split("\\/");
+            primerNumero = Float.parseFloat(numero[0]);
+            segundoNumero = Float.parseFloat(numero[1]);
+            tfResultado.setText(String.valueOf(Float.parseFloat (numero[0]) / Float.parseFloat (numero[1])));
+        }
+//        
+//    char ultimoOperador = ' ';
+//    int ultimoOperadorIndex = -1;
+//
+//    for (int i = 0; i < sentencia.length(); i++) {
+//        char caracter = sentencia.charAt(i);
+//        if (esOperador(caracter)) {
+//            ultimoOperador = caracter;
+//            ultimoOperadorIndex = i;
+//        }
+//    }
+//
+//    // Si se encontró un operador válido antes del final de la sentencia
+//    if (ultimoOperadorIndex != -1 && ultimoOperadorIndex < sentencia.length() - 1) {
+//        String numeroAntes = sentencia.substring(0, ultimoOperadorIndex);
+//        String numeroDespues = sentencia.substring(ultimoOperadorIndex + 1);
+//
+//        try {
+//            float num1 = Float.parseFloat(numeroAntes);
+//            float num2 = Float.parseFloat(numeroDespues);
+//            float resultado = 0;
+//
+//            
+//            switch (ultimoOperador) {
+//                case '+':
+//                    resultado = num1 + num2;
+//                    break;
+//                case '-':
+//                    resultado = num1 - num2;
+//                    break;
+//                case '*':
+//                    resultado = num1 * num2;
+//                    break;
+//                case '/':
+//                    if (num2 != 0) {
+//                        resultado = num1 / num2;
+//                    } else {
+//                        tfResultado.setText("Error: División por cero");
+//                        return;
+//                    }
+//                    break;
+//            }
+//
+//            // Mostrar el resultado en el campo de texto
+//            tfResultado.setText(String.valueOf(resultado));
+//        } catch (NumberFormatException e) {
+//            tfResultado.setText("Error: Formato de número inválido");
+//        }
+//    }
+        
+
     }
     
+//    private boolean esOperador(char c) {
+//    return c == '+' || c == '-' || c == '*' || c == '/';
+//    }
+
     
     private void btnmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmasActionPerformed
+        operacion(tfResultado.getText());
         tfResultado.setText(tfResultado.getText()+ "+");
     }//GEN-LAST:event_btnmasActionPerformed
 
     private void btnmenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenosActionPerformed
+        operacion(tfResultado.getText());
         tfResultado.setText(tfResultado.getText()+ "-");
     }//GEN-LAST:event_btnmenosActionPerformed
 
     private void btnmultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmultActionPerformed
-        tfResultado.setText(tfResultado.getText()+ "x");
+        operacion(tfResultado.getText());
+        tfResultado.setText(tfResultado.getText()+ "*");
     }//GEN-LAST:event_btnmultActionPerformed
 
     private void btndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndivActionPerformed
+        operacion(tfResultado.getText());
         tfResultado.setText(tfResultado.getText()+ "/");
     }//GEN-LAST:event_btndivActionPerformed
 
     private void btndelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndelActionPerformed
-        tfResultado.setText(tfResultado.getText()+ "DEL");
+        int longitud = tfResultado.getText().length();
+        
+        if(tfResultado.getText().length() <= 0){
+            tfResultado.setText("No hay caracteres por borrar");
+        }
+        tfResultado.setText(tfResultado.getText().substring(0, longitud - 1));
+        
+     
+    
     }//GEN-LAST:event_btndelActionPerformed
-
+  
+    
     /**
      * @param args the command line arguments
      */
