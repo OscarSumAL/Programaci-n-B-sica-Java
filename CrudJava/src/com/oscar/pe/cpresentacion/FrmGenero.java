@@ -4,6 +4,8 @@
  */
 package com.oscar.pe.cpresentacion;
 
+import com.oscar.pe.cmodelo.Genero;
+import com.oscar.pe.cnegocio.GeneroBO;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,10 +17,41 @@ public class FrmGenero extends javax.swing.JFrame {
     /**
      * Creates new form FrmGenero
      */
+    GeneroBO generoBO = new GeneroBO();
+    String mensaje;
+    String idGenero;
+    
     public FrmGenero() {
         initComponents();
+        listarGenero();
     }
-
+    private void listarGenero(){
+        generoBO.ListarGenero(tableFormulario);
+        
+    }
+    
+    private boolean validar(){
+        if (tfNombre.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Nombre es requerido");
+            return false;
+        }
+        else if(tfSigla.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Sigla es requerido");
+            return false;
+        }
+        else if(tfCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Código es requerido");
+            return false;
+        }
+        return true;
+    }
+    
+    private void limpiarGenero(){
+        tfNombre.setText("");
+        tfSigla.setText("");
+        tfCodigo.setText("");
+        bgEstado.clearSelection();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,6 +61,7 @@ public class FrmGenero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgEstado = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
@@ -42,7 +76,7 @@ public class FrmGenero extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableFormulario = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
@@ -60,38 +94,66 @@ public class FrmGenero extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel2.setText("Sigla");
 
+        tfCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCodigoActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel3.setText("Nombre");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel4.setText("Codigo");
 
+        bgEstado.add(rbActivo);
         rbActivo.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         rbActivo.setText("Activo");
 
+        bgEstado.add(rbInactivo);
         rbInactivo.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         rbInactivo.setText("Inactivo");
 
         jLabel5.setText("Estado");
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableFormulario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableFormulario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableFormularioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableFormulario);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -99,6 +161,11 @@ public class FrmGenero extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnMenu.setText("Menú Principal");
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +276,16 @@ public class FrmGenero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+                mensaje = generoBO.EliminarGenero(Integer.parseInt(idGenero));
+                listarGenero();
+                limpiarGenero();
+                
+                JOptionPane.showMessageDialog(null, mensaje);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
+            } 
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
@@ -222,6 +298,79 @@ public class FrmGenero extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Gracias por usar el sistema");
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void tfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCodigoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(validar()){
+        Genero genero = new Genero();
+        
+        genero.setNombre(tfNombre.getText());
+//        genero.setEstado(bgEstado.isSelected()?"1" : "0" );
+        genero.setSimbolo("/");
+        genero.setCodigo(tfCodigo.getText());
+//        genero.setDescripcion("Género Masculino");
+        genero.setUsuario_creacion("usuario21");
+        genero.setUsuario_actualizacion("usuario21");
+            try {
+                generoBO.AgregarGenero(genero);
+                listarGenero();
+                limpiarGenero();
+                JOptionPane.showMessageDialog(null, mensaje);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
+            }
+        
+        } 
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarGenero();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void tableFormularioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFormularioMouseClicked
+        int seleccion = tableFormulario.rowAtPoint(evt.getPoint());
+        idGenero = tableFormulario.getValueAt(seleccion, 0)+ "";
+        tfNombre.setText(tableFormulario.getValueAt(seleccion, 1)+ "");
+//        tfSigla.setText(tableFormulario.getValueAt(seleccion, 2)+ "");
+        tfCodigo.setText(tableFormulario.getValueAt(seleccion, 2)+ "");
+        
+        if ("1".equals(tableFormulario.getValueAt(seleccion, 2)+ "")){
+        rbActivo.setSelected(true);
+        
+    } else{
+            rbInactivo.setSelected(true);
+            }        
+    }//GEN-LAST:event_tableFormularioMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if(validar()){
+        Genero genero = new Genero();
+        
+        genero.setNombre(tfNombre.getText());
+//        genero.setEstado(bgEstado.isSelected()?"1" : "0" );
+        genero.setSimbolo("/");
+        genero.setCodigo(tfCodigo.getText());
+//        genero.setDescripcion("Género Masculino");
+        genero.setUsuario_creacion("usuario21");
+        genero.setUsuario_actualizacion("usuario21");
+            try {
+                generoBO.ModificarGenero(genero);
+                listarGenero();
+                limpiarGenero();
+                JOptionPane.showMessageDialog(null, mensaje);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, mensaje + e.getMessage());
+            }
+        
+        } 
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +408,7 @@ public class FrmGenero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgEstado;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
@@ -272,9 +422,9 @@ public class FrmGenero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbActivo;
     private javax.swing.JRadioButton rbInactivo;
+    private javax.swing.JTable tableFormulario;
     private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfSigla;

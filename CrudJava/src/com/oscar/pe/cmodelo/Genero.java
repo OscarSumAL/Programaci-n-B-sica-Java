@@ -6,7 +6,11 @@ public class Genero {
     private String codigo;
     private String simbolo;
     private String descripcion;
+    private String usuario_creacion;
+    private String usuario_actualizacion;
 
+    
+    //setters
     public void setIdGenero(int idGenero) {
         this.idGenero = idGenero;
     }
@@ -26,7 +30,16 @@ public class Genero {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    public void setUsuario_creacion(String usuario_creacion) {
+        this.usuario_creacion = usuario_creacion;
+    }
 
+    public void setUsuario_actualizacion(String usuario_actualizacion) {
+        this.usuario_actualizacion = usuario_actualizacion;
+    }
+    
+    //getters
     public int getIdGenero() {
         return idGenero;
     }
@@ -46,4 +59,14 @@ public class Genero {
     public String getDescripcion() {
         return descripcion;
     }    
+
+    public String getUsuario_actualizacion() {
+        return usuario_actualizacion;
+    }
+
+    public String getUsuario_creacion() {
+        return usuario_creacion;
+    }
+
+    
 }
